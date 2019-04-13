@@ -9,44 +9,53 @@ import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
 import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptJobManager;
+import com.google.errorprone.annotations.Var;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TestesDeImagens {
     @Test
     public void homePage() throws Exception {
 
-            final WebClient webClient = new WebClient(BrowserVersion.CHROME);
+        final WebClient webClient = new WebClient(BrowserVersion.CHROME);
         WebClientOptions option = webClient.getOptions();
-            webClient.waitForBackgroundJavaScript(20000);
-            webClient.getOptions().setThrowExceptionOnScriptError(false);
-            option.setJavaScriptEnabled(true);
-            option.setDownloadImages(true);
-            webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
-            webClient.setCssErrorHandler(new SilentCssErrorHandler());
-            HtmlPage page = null;
-            try{
-                page = webClient.getPage("http://elemaisvelhoelamaisnova.blogspot.com/");
-            }
-            catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
-            boolean test = false;
-            List<HtmlImage> elements = page.getByXPath("//img");
-            for (HtmlImage element: elements
-                 ) {
-                test = element.isComplete();
-            }
-            Assert.assertEquals("HtmlUnit - Welcome to HtmlUnit", page.getTitleText());
+        webClient.waitForBackgroundJavaScript(20000);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+        option.setJavaScriptEnabled(true);
+        option.setDownloadImages(true);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+        webClient.setCssErrorHandler(new SilentCssErrorHandler());
+        HtmlPage page = null;
+        HashMap<String, Boolean> results = new HashMap<String, Boolean>();
+        try{
+            page = webClient.getPage("http://taglivros.com.br");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
-            final String pageAsXml = page.asXml();
-            Assert.assertTrue(pageAsXml.contains("<body class=\"composite\">"));
+        List<HtmlImage> images = page.getByXPath("//img");
+        for (HtmlImage image: images) {
+            String src = image.getAttribute("src");
+            if (src.equals("")){
+                src = image.getAttribute("data-src");
+            }
+            if (src.equals("")){
+                src = image.getAttribute("data-lazy-load");
+            }
+            results.put(src, image.isComplete());
+        }
 
-            final String pageAsText = page.asText();
-            Assert.assertTrue(pageAsText.contains("Support for the HTTP and HTTPS protocols"));
+        for (Map.Entry<String, Boolean> result: results.entrySet()) {
+            System.out.println(result.getKey() + " : " + result.getValue());
+        }
+        Assert.assertTrue(!results.values().toString().contains("f"));
     }
 }
