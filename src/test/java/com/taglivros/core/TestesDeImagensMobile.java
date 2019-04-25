@@ -1,6 +1,5 @@
 package com.taglivros.core;
 
-import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,11 +10,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class TestesDeImagensMobile {
     WebDriver driver;
@@ -69,7 +66,6 @@ public class TestesDeImagensMobile {
         }
         Assert.assertTrue(!results.values().toString().contains("f"));
     }
-
 
     @Before
     public void doBefore(){

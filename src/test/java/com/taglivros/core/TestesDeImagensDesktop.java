@@ -1,9 +1,5 @@
 package com.taglivros.core;
 
-import com.gargoylesoftware.htmlunit.*;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlPicture;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

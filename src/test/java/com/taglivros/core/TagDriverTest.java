@@ -20,13 +20,13 @@ public class TagDriverTest {
         driver.get("http://taglivros.com.br");
         // time of the process of navigation and page load
         double loadTime = (Double) js.executeScript(
-                "return (window.performance.timing.loadEventEnd - window.performance.timing.navigationStart) / 1000");
+                "return (window.performance.timing.domComplete - window.performance.timing.navigationStart) / 1000");
         System.out.print(loadTime + " seconds");
     }
 
     @Before
     public void initializeDriver() throws Exception{
-        driver = TagDriver.getMobileDriver();
+        driver = TagDriver.getDriver();
         js = (JavascriptExecutor) driver;
     }
     @After
