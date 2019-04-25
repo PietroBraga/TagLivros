@@ -4,52 +4,139 @@ import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlPicture;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.util.*;
 
 public class TestesDeImagensDesktop {
+    private WebDriver driver;
+
     @Test
     public void imagensDesktopEstaoSendoExibidas(){
+        driver.get("http://taglivros.com");
+        WebDriverWait wait = new WebDriverWait(driver, 2);
 
-        WebClient webClient = TagWebClient.getWebClient();
-        HtmlPage page = null;
         HashMap<String, Boolean> results = new HashMap<String, Boolean>();
-        try{
-            page = webClient.getPage("http://taglivros.com.br");
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
 
-        List<HtmlImage> images = page.getByXPath("//img");
-        for (HtmlImage image: images) {
-            String src = image.getSrcAttribute();
-            if (src.equals("")) {
-                src = image.getAttribute("data-src");
-            }
-            if (src.equals("")) {
-                src = image.getAttribute("data-lazy-load");
-            }
+        //Obtem e testa as imagens com a tag picture
+        List<WebElement> images = driver.findElements(By.tagName("picture"));
+        for (WebElement image : images){
+            WebElement source = image.findElement(By.tagName("source"));
+            String name = source.getAttribute("srcset");
 
-            if (src.contains("/")) {
-                results.put(src.substring(src.lastIndexOf("/") + 1), image.isComplete());
+            if (!name.toLowerCase().contains("mobile")) {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", image);
+                try {
+                    wait.until(ExpectedConditions.visibilityOf(image));
+                }
+                catch (Exception e){}
+                results.put(name.substring(name.lastIndexOf("/") + 1), image.isDisplayed());
             }
         }
-
-        List<HtmlPicture> pictures = page.getByXPath("//picture");
-        for (HtmlPicture picture: pictures) {
-            String src = picture.getFirstElementChild().getAttribute("data-lazy-load");
-
-            if (!src.toLowerCase().contains("mobile"))
-            {
-                results.put(src.substring(src.lastIndexOf("/") + 1), picture.isDisplayed());
+        //Obtem e testa as imagens com a tag img
+        images = driver.findElements(By.tagName("img"));
+        for (WebElement image : images){
+            String name = image.getAttribute("src");
+            if (name == null){
+                name = image.getAttribute("data-src");
+            }
+            if (name == null){
+                name = image.getAttribute("data-lazy-load");
+            }
+            if (name != null) {
+                if ((name.contains(".png") || name.contains(".svg") || name.contains(".jpg")) && !name.contains("mobile")) {
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", image);
+                    try {
+                        wait.until(ExpectedConditions.visibilityOf(image));
+                    }
+                    catch (Exception e){}
+                    results.put(name.substring(name.lastIndexOf("/") + 1), image.isDisplayed());
+                }
             }
         }
-
+        //imprime os resultados no Console
         for (Map.Entry<String, Boolean> result: results.entrySet()) {
             System.out.println(result.getKey() + " : " + result.getValue());
         }
         Assert.assertTrue(!results.values().toString().contains("f"));
     }
+
+    @Test
+    public void imagensMobileNaoEstaoSendoExibidas(){
+        driver.get("http://taglivros.com");
+        WebDriverWait wait = new WebDriverWait(driver, 2);
+
+        HashMap<String, Boolean> results = new HashMap<String, Boolean>();
+
+        //Obtem e testa as imagens com a tag picture
+        List<WebElement> images = driver.findElements(By.tagName("picture"));
+        for (WebElement image : images){
+            WebElement source = image.findElement(By.tagName("source"));
+            String name = source.getAttribute("srcset");
+
+            if (name.toLowerCase().contains("mobile")) {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", image);
+                try {
+                    wait.until(ExpectedConditions.visibilityOf(image));
+                }
+                catch (Exception e){}
+                results.put(name.substring(name.lastIndexOf("/") + 1), image.isDisplayed());
+            }
+        }
+        //Obtem e testa as imagens com a tag img
+        images = driver.findElements(By.tagName("img"));
+        for (WebElement image : images){
+            String name = image.getAttribute("src");
+            if (name == null){
+                name = image.getAttribute("data-src");
+            }
+            if (name == null){
+                name = image.getAttribute("data-lazy-load");
+            }
+            if (name != null) {
+                if ((name.contains(".png") || name.contains(".svg") || name.contains(".jpg")) && name.contains("mobile")) {
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", image);
+                    try {
+                        wait.until(ExpectedConditions.visibilityOf(image));
+                    }
+                    catch (Exception e){}
+                    results.put(name.substring(name.lastIndexOf("/") + 1), image.isDisplayed());
+                }
+            }
+        }
+        //imprime os resultados no Console
+        for (Map.Entry<String, Boolean> result: results.entrySet()) {
+            System.out.println(result.getKey() + " : " + result.getValue());
+        }
+        Assert.assertTrue(results.values().toString().contains("f"));
+    }
+    @Before
+    public void doBefore(){
+        try {
+            driver = TagDriver.getDriver();
+        }
+        catch (Exception e){
+            System.out.println("Ops, algo deu errado ao iniciar o WebDriver Mobile");
+        }
+
+    }
+
+    @After
+    public void doAfter(){
+        if (driver != null)
+        {
+            driver.close();
+            driver.quit();
+        }
+    }
+
 }

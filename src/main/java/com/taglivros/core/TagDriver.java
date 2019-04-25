@@ -3,6 +3,8 @@ package com.taglivros.core;
 import com.taglivros.support.Propriedades;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class TagDriver {
 
     private static WebDriver driver;
@@ -15,6 +17,7 @@ public class TagDriver {
         else{
             driver = new ChromeDriverFactory().createWebDriver();
         }
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         return driver;
     }
 
