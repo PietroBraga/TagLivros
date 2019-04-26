@@ -5,12 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-
-import java.rmi.server.ExportException;
-
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import java.util.logging.Level;
 import static org.junit.Assert.*;
 
-public class TagDriverTest {
+public class TestesDeNavegacao {
 
     private WebDriver driver;
     private static JavascriptExecutor js;
@@ -22,6 +23,19 @@ public class TagDriverTest {
         double loadTime = (Double) js.executeScript(
                 "return (window.performance.timing.domComplete - window.performance.timing.navigationStart) / 1000");
         System.out.print(loadTime + " seconds");
+    }
+
+    @Test
+    public void paginaNaoContemErrosDeJavaScript() throws Exception{
+        driver.get("http://taglivros.com");
+        LogEntries entries = driver.manage().logs().get(LogType.BROWSER);
+        for (LogEntry entry : entries){
+            if (entry.getLevel().equals(Level.SEVERE))
+                System.out.println("\u001B[31m Level: " + entry.getLevel() + " Message: " + entry.getMessage() + "\u001B[0m");
+            if (entry.getLevel().equals(Level.WARNING))
+                System.out.println("\u001B[33m Level: " + entry.getLevel() + " Message: " + entry.getMessage() + "\u001B[0m");
+        }
+        assertTrue(!entries.iterator().hasNext());
     }
 
     @Before
