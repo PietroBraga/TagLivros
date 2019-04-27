@@ -1,5 +1,6 @@
 package com.taglivros.core;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +19,7 @@ public class TestesDeImagensDesktop {
 
     @Test
     public void imagensDesktopEstaoSendoExibidas(){
-        driver.get("http://taglivros.com");
+        driver.get("https://taglivros.com/associe-se/escolha-sua-caixinha");
         WebDriverWait wait = new WebDriverWait(driver, 2);
 
         HashMap<String, Boolean> results = new HashMap<String, Boolean>();
@@ -68,7 +69,7 @@ public class TestesDeImagensDesktop {
 
     @Test
     public void imagensMobileNaoEstaoSendoExibidas(){
-        driver.get("http://taglivros.com");
+        driver.get("https://taglivros.com/associe-se/escolha-sua-caixinha");
         WebDriverWait wait = new WebDriverWait(driver, 2);
 
         HashMap<String, Boolean> results = new HashMap<String, Boolean>();
@@ -130,7 +131,6 @@ public class TestesDeImagensDesktop {
     public void doAfter(){
         if (driver != null)
         {
-            driver.close();
             driver.quit();
         }
     }

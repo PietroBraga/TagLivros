@@ -18,6 +18,7 @@ public class TagImagens {
         file = new File(System.getProperty("user.home") + "\\Documents\\ImagensTag");
         return file;
     }
+
     private static File file;
 
     public static List<String> obtemLinkDasImagens() throws Exception {
@@ -29,10 +30,10 @@ public class TagImagens {
         List<HtmlImage> images = page.getByXPath("//img");
         for (HtmlImage image : images) {
             String src = image.getSrcAttribute();
-            if (src.isBlank()) {
+            if (src.isEmpty()) {
                 src = image.getAttribute("data-src");
             }
-            if (src.isBlank()) {
+            if (src.isEmpty()) {
                 src = image.getAttribute("data-lazy-load");
             }
 
@@ -52,7 +53,7 @@ public class TagImagens {
         return result;
     }
 
-    public static void efetuaDownloadDasImages()throws Exception{
+    public static void efetuaDownloadDasImages() throws Exception {
         criaDiretorio();
         List<String> urls = obtemLinkDasImagens();
 
@@ -73,7 +74,7 @@ public class TagImagens {
     }
 
     public static void deletaDiretorio() throws IOException {
-       // if ((getFile().exists()) && (getFile().isDirectory()))
+        if ((getFile().exists()) && (getFile().isDirectory()))
             FileUtils.forceDelete(getFile());
     }
 }
