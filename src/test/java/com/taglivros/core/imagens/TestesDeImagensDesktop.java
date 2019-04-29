@@ -1,5 +1,6 @@
 package com.taglivros.core.imagens;
 
+import org.apache.commons.lang3.SystemUtils;
 import com.taglivros.core.TagDriver;
 import org.junit.After;
 import org.junit.Assert;
@@ -131,7 +132,6 @@ public class TestesDeImagensDesktop {
     public void doAfter(){
         if (driver != null)
         {
-            driver.close();
             driver.quit();
         }
     }

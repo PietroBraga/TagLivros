@@ -26,7 +26,15 @@ public class TamanhoImagens {
                 if (f.isFile()) {
                     aux++;
                 }
-                System.out.println(f.length());
+                if (f.length() > 1024 * 1024) {
+                    System.out.println(f.length() / (1024 * 1024) + " MB");
+                }
+                else if (f.length() > 1024) {
+                    System.out.println(f.length() / (1024) + " KB");
+                }
+                else {
+                    System.out.println(f.length() + " Bytes");
+                }
             }
         }
     }
