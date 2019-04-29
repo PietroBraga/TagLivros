@@ -1,5 +1,6 @@
-package com.taglivros.core;
+package com.taglivros.core.imagens;
 
+import com.taglivros.core.TagDriver;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

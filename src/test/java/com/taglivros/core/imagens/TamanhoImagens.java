@@ -1,22 +1,11 @@
 package com.taglivros.core.imagens;
 
-import com.taglivros.core.TagDriver;
 import com.taglivros.imagens.TagImagens;
-import com.twelvemonkeys.io.FileUtil;
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
-import org.openqa.selenium.logging.LogEntries;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 
 public class TamanhoImagens {
     @Before
