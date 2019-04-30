@@ -10,7 +10,7 @@ public class FirefoxDriverFactory implements IWebDriver {
             System.setProperty("webdriver.gecko.driver", "src\\main\\resources\\geckodriver.exe");
         }
         else if (SystemUtils.IS_OS_LINUX){
-            System.setProperty("webdriver.gecko.driver", "src\\main\\resources\\geckodriver");
+            System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver");
         }
     }
 
