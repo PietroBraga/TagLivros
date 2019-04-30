@@ -1,5 +1,6 @@
 package com.taglivros.navegacao.setup;
 
+import com.taglivros.core.TagDriver;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
@@ -10,8 +11,7 @@ public class Setup {
 
     @Before
     public void inicia() throws Exception {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        driver = TagDriver.getDriver();
     }
 
     @After
