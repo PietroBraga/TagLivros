@@ -28,7 +28,7 @@ public class ChromeDriverFactory implements IWebDriver {
             System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");
         }
         else if (SystemUtils.IS_OS_LINUX){
-            System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+            System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         }
     }
 
