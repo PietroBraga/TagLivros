@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TagImagens {
     public static File getFile() {
-        file = new File(System.getProperty("user.home") + "\\Documents\\ImagensTag");
+        file = new File(System.getProperty("user.home") + "/Documents/ImagensTag");
         return file;
     }
 
@@ -59,7 +59,7 @@ public class TagImagens {
 
         for (String link : urls) {
             URL url = new URL(link);
-            FileUtils.copyURLToFile(url, new File(getFile() + "\\" + link.substring(link.lastIndexOf("/") + 1)));
+            FileUtils.copyURLToFile(url, new File(getFile() + "/" + link.substring(link.lastIndexOf("/") + 1)));
         }
     }
 
