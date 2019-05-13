@@ -1,14 +1,15 @@
 package com.taglivros.core.imagens;
 
 import com.taglivros.imagens.TagImagens;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.After;
+
 import java.io.File;
 import java.io.IOException;
 
-public class TamanhoImagens {
+public class TestesDeImagensTamanho {
     @Before
     public void doBefore() throws Exception {
         TagImagens.deletaDiretorio();
@@ -46,7 +47,3 @@ public class TamanhoImagens {
         TagImagens.deletaDiretorio();
     }
 }
-
-
-
-
