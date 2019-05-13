@@ -19,30 +19,18 @@ public class Paginas  extends Elementos {
 
 //region valida botoes
     public boolean validaBotaoEstaClicavelByXpath(String descricaoBotao){
-    if(isElementPresentDisplayedClicable(driver, By.xpath("//*[contains(text(), '"+descricaoBotao+"')]"), 5))
-        return true;
-    else
-        return false;
+        return isElementPresentDisplayedClicable(driver, By.xpath("//*[contains(text(), '" + descricaoBotao + "')]"), 5);
 }
     public boolean validaBotaoEstaClicavelById(String idElemento){
-        if(isElementPresentDisplayedClicable(driver, By.id(idElemento), 5))
-            return true;
-        else
-            return false;
+        return isElementPresentDisplayedClicable(driver, By.id(idElemento), 5);
     }
 
     public boolean validaBotaoEstaClicavelByName(String nameElemento){
-        if(isElementPresentDisplayedClicable(driver, By.name(nameElemento), 5))
-            return true;
-        else
-            return false;
+        return isElementPresentDisplayedClicable(driver, By.name(nameElemento), 5);
     }
 
     public boolean validaBotaoEstaClicavelByCssSelector(String cssElemento){
-        if(isElementPresentDisplayedClicable(driver, By.cssSelector(cssElemento),5))
-            return true;
-        else
-            return false;
+        return isElementPresentDisplayedClicable(driver, By.cssSelector(cssElemento), 5);
     }
 
     public void clicaNoBotaoEntendaATag(){
@@ -52,10 +40,7 @@ public class Paginas  extends Elementos {
 //endregion valida botoes
 //region modal
     public boolean validaModalByCss(String cssModal){
-    if(isElementPresentDisplayed(driver, By.cssSelector(cssModal), 5))
-            return true;
-        else
-            return false;
+        return isElementPresentDisplayed(driver, By.cssSelector(cssModal), 5);
 }
 //endregion modal
 

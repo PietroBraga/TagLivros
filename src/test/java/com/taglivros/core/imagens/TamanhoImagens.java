@@ -16,7 +16,7 @@ public class TamanhoImagens {
     }
 
     @Test
-    public void _TamanhoDasImagens() {
+    public void tamanhoDasImagens() {
         File file = TagImagens.getFile();
         File[] arquivos = file.listFiles();
         int aux = 0;
