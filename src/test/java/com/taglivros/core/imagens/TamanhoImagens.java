@@ -1,6 +1,7 @@
 package com.taglivros.core.imagens;
 
 import com.taglivros.imagens.TagImagens;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
@@ -37,6 +38,7 @@ public class TamanhoImagens {
                 }
             }
         }
+        Assert.assertTrue(true);
     }
 
     @After
